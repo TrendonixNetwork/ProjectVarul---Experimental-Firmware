@@ -1258,7 +1258,7 @@ inline void get_serial_commands() {
             #else
               safe_delay(1000);
             #endif
-            set_led_color(0, 0, 0);   // OFF
+            // set_led_color(0, 0, 0); OFF
           #endif
           card.checkautostart(true);
         }
@@ -7592,7 +7592,7 @@ inline void gcode_M109() {
       #if ENABLED(RGBW_LED) || ENABLED(NEOPIXEL_RGBW_LED)
         set_led_color(0, 0, 0, 255);  // Turn on the WHITE LED
       #else
-        set_led_color(255, 255, 255); // Set LEDs All On
+        set_led_color(0, 255, 127); // Set LEDs All On
       #endif
     #endif
   }
@@ -13551,6 +13551,18 @@ void setup() {
       pe_deactivate_magnet(1);
     #endif
   #endif
+  #if ENABLED(PRINTER_EVENT_LEDS)
+      #if ENABLED(RGB_LED)
+      set_led_color(255, 0, 0);
+      delay(250);
+      set_led_color(255, 127, 0);
+      delay(250);
+      set_led_color(255, 0, 255);
+      delay(250);
+      set_led_color(0, 127, 255);
+      delay(250);
+      #endif
+  #endif
 }
 
 /**
@@ -13564,6 +13576,11 @@ void setup() {
  *  - Call LCD update
  */
 void loop() {
+  #if ENABLED(PRINTER_EVENT_LEDS)
+      #if ENABLED(RGB_LED)
+      set_led_color(255, 255, 255);
+      #endif
+  #endif
   if (commands_in_queue < BUFSIZE) get_available_commands();
 
   #if ENABLED(SDSUPPORT)
