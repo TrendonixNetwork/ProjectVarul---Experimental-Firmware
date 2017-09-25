@@ -1255,10 +1255,11 @@ inline void get_serial_commands() {
             set_led_color(0, 255, 0); // Green
             #if HAS_RESUME_CONTINUE
               enqueue_and_echo_commands_P(PSTR("M0")); // end of the queue!
+              set_led_color(255, 255, 255);
             #else
               safe_delay(1000);
             #endif
-            // set_led_color(0, 0, 0); OFF
+            //set_led_color(0, 0, 0); //OFF
           #endif
           card.checkautostart(true);
         }
@@ -7592,7 +7593,7 @@ inline void gcode_M109() {
       #if ENABLED(RGBW_LED) || ENABLED(NEOPIXEL_RGBW_LED)
         set_led_color(0, 0, 0, 255);  // Turn on the WHITE LED
       #else
-        set_led_color(0, 255, 127); // Set LEDs All On
+        set_led_color(0, 127, 255); // Set LEDs All On
       #endif
     #endif
   }
@@ -13561,7 +13562,25 @@ void setup() {
       delay(250);
       set_led_color(0, 127, 255);
       delay(250);
+      set_led_color(255, 255, 255);
       #endif
+  #endif
+  #if ENABLED(SPEAKER)
+    BUZZ(600,0);
+    BUZZ(150,3135);
+    BUZZ(150,2959);
+    BUZZ(150,2793);
+    BUZZ(150,2489);
+    BUZZ(150,0);
+    BUZZ(150,2637);
+    BUZZ(150,0);
+    BUZZ(150,1661);
+    BUZZ(150,880);
+    BUZZ(150,2093);
+    BUZZ(150,0);
+    BUZZ(150,880);
+    BUZZ(150,2093);
+    BUZZ(150,2349);
   #endif
 }
 
@@ -13576,11 +13595,6 @@ void setup() {
  *  - Call LCD update
  */
 void loop() {
-  #if ENABLED(PRINTER_EVENT_LEDS)
-      #if ENABLED(RGB_LED)
-      set_led_color(255, 255, 255);
-      #endif
-  #endif
   if (commands_in_queue < BUFSIZE) get_available_commands();
 
   #if ENABLED(SDSUPPORT)
